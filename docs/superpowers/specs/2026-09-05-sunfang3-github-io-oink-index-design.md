@@ -108,7 +108,13 @@ Home content files hold title and description only. Sections live in `data/home/
 
 ### English (`data/home/en.yaml`)
 
-Same structure. Title Fang Sun. Lead: *An index of textbook companions and frontier-paper notes. The writing stays on those sites; this is the door.*
+- Hero eyebrow: Notes index
+- Hero title: Fang Sun
+- Hero lead: An index of textbook companions and frontier-paper notes. The writing stays on those sites; this is the door.
+- Actions: Notes → `notes/` (primary); Papers → `papers/` (ghost)
+- Cards (2 columns): Textbook companions → `notes/`; Frontier papers → `papers/`
+- CTA title: This is an index, not a third notes warehouse.
+- CTA button: About → `about/`
 
 Internal `url` values are site paths without a leading slash so OINK prefixes the language.
 
@@ -118,9 +124,23 @@ Ordinary section roots, not Docs/Blog/Book types. Top nav `menus.main` on each r
 
 | Path | Content |
 |------|---------|
-| `/notes/` | Short intro + `{.cards}` list of textbook companions |
-| `/papers/` | Short intro + `{.cards}` list of paper notes |
-| `/about/` | Three sentences: who, what this site is, GitHub profile link. No long bio. |
+| `/notes/` | Intro: 按教材组织的伴读索引，正文在各自站点。Then `{.cards}` or the empty line: 还没有公开条目。 / *No public entries yet.* |
+| `/papers/` | Intro: 一篇论文一份笔记的索引，正文在各自站点。Then `{.cards}` or the same empty line. |
+| `/about/` | Fixed copy below. No affiliation, lab, or long bio. |
+
+### About copy
+
+Chinese:
+
+1. 我是孙方。
+2. 这个站点是教材伴读与前沿论文的索引；正文仍在各自的仓库里。
+3. GitHub：[sunfang3](https://github.com/sunfang3)
+
+English:
+
+1. I am Fang Sun.
+2. This site indexes textbook companions and frontier-paper notes; the writing stays in those repositories.
+3. GitHub: [sunfang3](https://github.com/sunfang3)
 
 Home cards point at these two catalogs, not at individual books. Individual entries appear only on `/notes/` and `/papers/`. Duplicating a featured bookshelf on the home page is out of scope.
 
