@@ -71,7 +71,7 @@ If Hugo is missing or not Extended, install the official Extended 0.165.0 binary
 - [ ] **Step 2: Create the GitHub repository from the template**
 
 ```bash
-gh repo create sunfang3.github.io --template pgsty/oink-starter --public --confirm
+gh repo create sunfang3.github.io --template pgsty/oink-starter --public --yes
 ```
 
 Expected: `https://github.com/sunfang3/sunfang3.github.io` exists. If the name is taken, stop and tell the human; do not pick a different name (user Pages requires this exact repo name).
