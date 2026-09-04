@@ -281,15 +281,13 @@ git commit -m "chore: drop docs, blog, book, French, and Cloudflare"
 
 - [ ] **Step 1: Write the failing route check**
 
-After the current (English-default) tree, Chinese home is at `public/zh/index.html`. The contract we want:
+Hugo still writes a default-language alias (English-default Starter has `public/en/index.html` as a meta-refresh to `/`). Do not assert that `public/zh` is absent after the flip. The contract is: Chinese landing copy is at `/`, English landing copy is at `/en/`.
 
 ```bash
-test -f public/index.html
-test -f public/en/index.html
-test ! -e public/zh
+grep -F "The writing stays on those sites" public/en/index.html
 ```
 
-Run it against the last build. Expected: `public/en` missing and `public/zh` present — the check fails. Do not “fix” by copying files; fix configuration next.
+Run it against the last build. Expected: FAIL (that English lead currently lives at `public/index.html`; `public/en/index.html` is only the alias redirect). Do not “fix” by copying files; fix configuration next.
 
 - [ ] **Step 2: Replace the identity/language section of `hugo.yaml`**
 
@@ -366,13 +364,12 @@ hugo --cleanDestinationDir --gc --minify --environment production \
   --printPathWarnings --panicOnWarning
 test -f public/index.html
 test -f public/en/index.html
-test ! -e public/zh
 grep -F "孙方" public/index.html
-grep -F "Fang Sun" public/en/index.html
+grep -F "The writing stays on those sites" public/en/index.html
 ls public/offline-search-index.zh*.json public/offline-search-index.en*.json
 ```
 
-Expected: all tests pass; build exit 0.
+Expected: all tests pass; build exit 0. `public/zh/index.html` may exist as a redirect alias to `/`; that is not a failure.
 
 - [ ] **Step 5: Commit**
 
@@ -396,7 +393,7 @@ git commit -m "feat: make Chinese the default language"
 - Create: `content/about/_index.md`
 - Create: `content/about/_index.en.md`
 
-Do not set `type: docs` / `type: blog` / `type: book`. Empty catalogs are the correct v1 body; Task 7 may replace the empty line with cards.
+Do not set `type: docs` / `type: blog` / `type: book`. Empty catalogs are the correct v1 body; Task 7 may replace the empty line with cards. Do not add a `首页` / `Home` `menus.main` entry — OINK’s brand/logo is the home link, matching the Starter.
 
 - [ ] **Step 1: Write Chinese section roots**
 
@@ -680,7 +677,6 @@ ok("production build")
   "en/about/index.html" => true,
   "llms.txt" => true,
   "robots.txt" => true,
-  "zh/index.html" => false,
   "docs/index.html" => false,
   "blog/index.html" => false,
   "book/index.html" => false,
@@ -774,7 +770,7 @@ gh repo list sunfang3 --limit 100 --json name,isPrivate,homepage,url \
   --jq '.[] | select(.isPrivate==false) | [.name,.homepage,.url] | @tsv'
 ```
 
-A candidate counts only if `curl -L` returns **200** (not 404, not a GitHub login page).
+A candidate counts only if `curl -L` returns **200** (not 404, not a GitHub login page). Put textbook companions on `/notes/` only. Put `frontier-papers` (and any other paper-note Pages) on `/papers/` only. Do not dump every 200 URL onto notes.
 
 - [ ] **Step 2: If none return 200, stop this task after re-running verify**
 
@@ -903,7 +899,14 @@ Open these on the real host, not localhost:
 - https://sunfang3.github.io/robots.txt
 - https://sunfang3.github.io/this-page-does-not-exist (site 404)
 
-Production search indexes are fingerprinted (`offline-search-index.zh.<hash>.json`). Do not request the unhashed path. From the homepage HTML, extract the `offline-search-index` URL the page actually loads and `curl` that URL; it must return 200 JSON.
+Production search indexes are fingerprinted (`offline-search-index.zh.<hash>.json`). Do not request the unhashed path:
+
+```bash
+idx=$(curl -fsS https://sunfang3.github.io/ | grep -oE 'https?://[^"]*offline-search-index[^"]+\.json' | head -1)
+curl -fsS -o /dev/null -w "%{http_code}\n" "$idx"
+```
+
+Expected: `200`.
 
 Confirm: language switch from `/notes/` lands on `/en/notes/`; canonical URLs use `https://sunfang3.github.io/`; `robots.txt` contains `Allow: /`; every catalog outbound link still returns 200.
 
