@@ -369,7 +369,7 @@ test -f public/en/index.html
 test ! -e public/zh
 grep -F "孙方" public/index.html
 grep -F "Fang Sun" public/en/index.html
-ls public/offline-search-index.zh.json public/offline-search-index.en.json
+ls public/offline-search-index.zh*.json public/offline-search-index.en*.json
 ```
 
 Expected: all tests pass; build exit 0.
@@ -678,8 +678,6 @@ ok("production build")
   "en/papers/index.html" => true,
   "about/index.html" => true,
   "en/about/index.html" => true,
-  "offline-search-index.zh.json" => true,
-  "offline-search-index.en.json" => true,
   "llms.txt" => true,
   "robots.txt" => true,
   "zh/index.html" => false,
@@ -694,6 +692,11 @@ ok("production build")
   else
     exists ? fail!("should not exist #{rel}") : ok("absent #{rel}")
   end
+end
+
+%w[zh en].each do |lang|
+  hits = Dir.glob(public_path("offline-search-index.#{lang}*.json"))
+  hits.empty? ? fail!("missing offline-search-index.#{lang}*.json") : ok(hits.join(", "))
 end
 
 needles = {
@@ -799,6 +802,11 @@ English peer must list the **same URLs in the same order**. Do not add software 
 
 ```bash
 ruby scripts/verify.rb
+```
+
+If Step 2 made no edits, stop. If cards were added:
+
+```bash
 git add content/notes content/papers
 git commit -m "feat: list public companion pages in the catalogs"
 ```
@@ -871,10 +879,11 @@ gh api -X PUT repos/sunfang3/sunfang3.github.io/pages \
   || true
 ```
 
-If the API call fails, set Settings → Pages → Source → GitHub Actions in the browser. Watch the workflow:
+If the API call fails, set Settings → Pages → Source → GitHub Actions in the browser. Watch the latest run (do not run bare `gh run watch`, which waits on a TTY prompt):
 
 ```bash
-gh run watch --repo sunfang3/sunfang3.github.io
+gh run list --repo sunfang3/sunfang3.github.io --limit 1 --json databaseId,status,conclusion,url
+gh run watch "$(gh run list --repo sunfang3/sunfang3.github.io --limit 1 --json databaseId --jq '.[0].databaseId')"
 ```
 
 Expected: workflow green.
@@ -888,11 +897,14 @@ Open these on the real host, not localhost:
 - https://sunfang3.github.io/notes/
 - https://sunfang3.github.io/en/notes/
 - https://sunfang3.github.io/papers/
+- https://sunfang3.github.io/en/papers/
 - https://sunfang3.github.io/about/
-- https://sunfang3.github.io/offline-search-index.zh.json
+- https://sunfang3.github.io/en/about/
 - https://sunfang3.github.io/robots.txt
 - https://sunfang3.github.io/this-page-does-not-exist (site 404)
 
+Production search indexes are fingerprinted (`offline-search-index.zh.<hash>.json`). Do not request the unhashed path. From the homepage HTML, extract the `offline-search-index` URL the page actually loads and `curl` that URL; it must return 200 JSON.
+
 Confirm: language switch from `/notes/` lands on `/en/notes/`; canonical URLs use `https://sunfang3.github.io/`; `robots.txt` contains `Allow: /`; every catalog outbound link still returns 200.
 
-If search JSON 404s while HTML works, `baseURL` is wrong — fix `hugo.yaml` / the workflow `--baseURL` and redeploy. Do not “fix” it with `canonifyURLs`.
+If the referenced search JSON 404s while HTML works, `baseURL` is wrong — fix `hugo.yaml` / the workflow `--baseURL` and redeploy. Do not “fix” it with `canonifyURLs`.
