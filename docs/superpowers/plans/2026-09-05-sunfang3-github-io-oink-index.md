@@ -800,7 +800,7 @@ English peer must list the **same URLs in the same order**. Do not add software 
 ruby scripts/verify.rb
 ```
 
-If Step 2 made no edits, stop. If cards were added:
+If Step 3 made no edits, stop. If cards were added:
 
 ```bash
 git add content/notes content/papers
@@ -814,7 +814,7 @@ git commit -m "feat: list public companion pages in the catalogs"
 **Files:**
 - Modify: `hugo.yaml` (`params.github_repo`, `params.github_branch`)
 - Modify: `README.md`
-- Modify: `LICENSE` copyright line if it still says a generic Starter holder
+- Modify: `LICENSE` — set the copyright line to `Copyright (c) 2026 Fang Sun`
 
 - [ ] **Step 1: Enable repository links**
 
@@ -875,11 +875,16 @@ gh api -X PUT repos/sunfang3/sunfang3.github.io/pages \
   || true
 ```
 
-If the API call fails, set Settings → Pages → Source → GitHub Actions in the browser. Watch the latest run (do not run bare `gh run watch`, which waits on a TTY prompt):
+If the API call fails, set Settings → Pages → Source → GitHub Actions in the browser. Wait until a run exists, then watch it (do not run bare `gh run watch`, which waits on a TTY prompt):
 
 ```bash
-gh run list --repo sunfang3/sunfang3.github.io --limit 1 --json databaseId,status,conclusion,url
-gh run watch "$(gh run list --repo sunfang3/sunfang3.github.io --limit 1 --json databaseId --jq '.[0].databaseId')"
+for i in 1 2 3 4 5 6; do
+  id=$(gh run list --repo sunfang3/sunfang3.github.io --limit 1 --json databaseId --jq '.[0].databaseId')
+  test -n "$id" && break
+  sleep 5
+done
+test -n "$id"
+gh run watch "$id"
 ```
 
 Expected: workflow green.
@@ -899,14 +904,15 @@ Open these on the real host, not localhost:
 - https://sunfang3.github.io/robots.txt
 - https://sunfang3.github.io/this-page-does-not-exist (site 404)
 
-Production search indexes are fingerprinted (`offline-search-index.zh.<hash>.json`). Do not request the unhashed path:
+Production search indexes are fingerprinted. The homepage does not emit an absolute JSON URL; it sets a root-relative `data-td-index-src` such as `/offline-search-index.zh.<hash>.json`. Do not request the unhashed path.
 
 ```bash
-idx=$(curl -fsS https://sunfang3.github.io/ | grep -oE 'https?://[^"]*offline-search-index[^"]+\.json' | head -1)
-curl -fsS -o /dev/null -w "%{http_code}\n" "$idx"
+src=$(curl -fsS https://sunfang3.github.io/ | grep -oE 'data-td-index-src="[^"]+"' | head -1 | cut -d'"' -f2)
+test -n "$src"
+curl -fsS -o /dev/null -w "%{http_code}\n" "https://sunfang3.github.io${src}"
 ```
 
-Expected: `200`.
+Expected: `src` is non-empty and the curl prints `200`.
 
 Confirm: language switch from `/notes/` lands on `/en/notes/`; canonical URLs use `https://sunfang3.github.io/`; `robots.txt` contains `Allow: /`; every catalog outbound link still returns 200.
 
