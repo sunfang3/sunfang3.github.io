@@ -11,4 +11,6 @@ menus:
 
 An index of textbook companions. The writing stays on those sites.
 
-No public entries yet.
+- [Hong Econometrics notes](https://sunfang3.github.io/hong_econometrics/)
+- [HDS Companion](https://sunfang3.github.io/HDS/)
+{.cards}

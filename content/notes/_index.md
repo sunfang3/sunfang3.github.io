@@ -11,4 +11,6 @@ menus:
 
 按教材组织的伴读索引，正文在各自站点。
 
-还没有公开条目。
+- [Hong Econometrics 笔记](https://sunfang3.github.io/hong_econometrics/)
+- [HDS 伴读](https://sunfang3.github.io/HDS/)
+{.cards}

@@ -11,4 +11,5 @@ menus:
 
 一篇论文一份笔记的索引，正文在各自站点。
 
-还没有公开条目。
+- [Schölkopf 因果论文阅读站](https://sunfang3.github.io/schoelkopf-causality-notes/)
+{.cards}
