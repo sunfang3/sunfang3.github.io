@@ -4,6 +4,7 @@
 title: &siteTitle 孙方
 baseURL: https://sunfang3.github.io/
 defaultContentLanguage: en
+disableLanguages: [fr]
 enableGitInfo: true
 enableRobotsTXT: true
 enableEmoji: true
