@@ -1,4 +1,4 @@
-module github.com/pgsty/oink-starter
+module github.com/sunfang3/sunfang3.github.io
 
 go 1.27.0
 

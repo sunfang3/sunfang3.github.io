@@ -1,8 +1,8 @@
 # OINK Starter — the only site configuration file.
 # Change the two marked values first; everything else builds as-is.
 
-title: &siteTitle Project Name # CHANGE ME: one shared title for every language
-baseURL: https://example.org/ # CHANGE ME: canonical production URL
+title: &siteTitle 孙方
+baseURL: https://sunfang3.github.io/
 defaultContentLanguage: en
 enableGitInfo: true
 enableRobotsTXT: true
@@ -53,7 +53,7 @@ outputs:
 params:
   offline_search: true
   copyright:
-    authors: Project contributors
+    authors: Fang Sun
     from_year: 2026
   footer_center_info: ''
   ui:
