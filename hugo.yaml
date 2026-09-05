@@ -1,9 +1,9 @@
 # OINK Starter — the only site configuration file.
 # Change the two marked values first; everything else builds as-is.
 
-title: &siteTitle 孙方
+title: 孙方
 baseURL: https://sunfang3.github.io/
-defaultContentLanguage: en
+defaultContentLanguage: zh
 disableLanguages: [fr]
 enableGitInfo: true
 enableRobotsTXT: true
@@ -11,28 +11,26 @@ enableEmoji: true
 timeZone: UTC
 
 languages:
-  en:
-    label: English
-    locale: en-US
-    weight: 1
-    title: *siteTitle
-    params:
-      description: Documentation, updates, and guides for your project.
   zh:
     label: 简体中文
     locale: zh-CN
-    weight: 2
-    title: *siteTitle
+    weight: 1
+    title: 孙方
     hasCJKLanguage: true
     params:
-      description: 你的项目文档、动态与指南。
+      description: 教材伴读与前沿论文的索引。
+  en:
+    label: English
+    locale: en-US
+    weight: 2
+    title: Fang Sun
+    params:
+      description: An index of textbook companions and frontier-paper notes.
   fr:
     label: Français
     locale: fr-FR
     weight: 3
-    title: *siteTitle
-    params:
-      description: Documentation, actualités et guides de votre projet.
+    title: Fang Sun
 
 # OINK's Markdown components depend on these three Goldmark settings.
 markup:
