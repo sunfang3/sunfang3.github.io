@@ -1,4 +1,4 @@
-sections: [hero]
+sections: [hero, cards, cta]
 
 hero:
   align: center
@@ -6,3 +6,25 @@ hero:
   title_lines:
     - words: [{ text: Fang Sun }]
   lead: An index of textbook companions and frontier-paper notes. The writing stays on those sites; this is the door.
+  actions:
+    - { label: Notes, url: notes/, icon: fa-solid fa-book-open, style: primary }
+    - { label: Papers, url: papers/, icon: fa-solid fa-arrow-right, style: ghost }
+
+cards:
+  columns: 2
+  items:
+    - title: Textbook companions
+      desc: An index of Quarto textbook companions.
+      icon: fa-solid fa-book-open
+      url: notes/
+    - title: Frontier papers
+      desc: One paper, one note.
+      icon: fa-solid fa-file-lines
+      url: papers/
+
+cta:
+  title: This is an index, not a third notes warehouse.
+  text: The writing stays in those repositories.
+  label: About
+  url: about/
+  style: primary

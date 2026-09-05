@@ -1,4 +1,4 @@
-sections: [hero]
+sections: [hero, cards, cta]
 
 hero:
   align: center
@@ -6,3 +6,25 @@ hero:
   title_lines:
     - words: [{ text: 孙方 }]
   lead: 教材伴读与前沿论文的入口。正文仍在各自站点，这里只做目录。
+  actions:
+    - { label: 教材伴读, url: notes/, icon: fa-solid fa-book-open, style: primary }
+    - { label: 前沿论文, url: papers/, icon: fa-solid fa-arrow-right, style: ghost }
+
+cards:
+  columns: 2
+  items:
+    - title: 教材伴读
+      desc: 按书组织的 Quarto 伴读索引。
+      icon: fa-solid fa-book-open
+      url: notes/
+    - title: 前沿论文
+      desc: 一篇论文一份笔记的索引。
+      icon: fa-solid fa-file-lines
+      url: papers/
+
+cta:
+  title: 这是索引，不是第三个笔记仓库。
+  text: 正文仍在各自站点。
+  label: 关于
+  url: about/
+  style: primary
