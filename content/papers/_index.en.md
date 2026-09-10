@@ -16,5 +16,5 @@ An index of paper notes. The writing stays on those sites.
 - [Imai selected-manuscript notes](https://sunfang3.github.io/imai-manuscripts/)
 - [Frontier-paper reading station](https://sunfang3.github.io/frontier-papers/)
 - [Su Weijie paper reading station](https://sunfang3.github.io/su-weijie-papers/)
-<!-- catalog:end -->
 {.cards}
+<!-- catalog:end -->

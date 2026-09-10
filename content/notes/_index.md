@@ -34,5 +34,5 @@ menus:
 - [“傻瓜”计量经济学与 Stata 应用伴读](https://sunfang3.github.io/Xi/)
 - [DSS/QSS 伴读](https://sunfang3.github.io/dss-qss-companion/)
 - [Protter–Morrey《实分析导论》伴读](https://sunfang3.github.io/PM/)
-<!-- catalog:end -->
 {.cards}
+<!-- catalog:end -->

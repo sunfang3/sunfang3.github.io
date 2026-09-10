@@ -88,7 +88,7 @@ def marker_block(items, catalog, locale)
   lines = items.map do |repo|
     "- [#{label_for(repo, catalog, locale)}](#{repo.fetch('page_url')})"
   end
-  ["<!-- catalog:begin -->", *lines, "<!-- catalog:end -->"].join("\n")
+  ["<!-- catalog:begin -->", *lines, "{.cards}", "<!-- catalog:end -->"].join("\n")
 end
 
 def replace_catalog(path, block)
