@@ -11,7 +11,10 @@ menus:
 
 一篇论文一份笔记的索引，正文在各自站点。
 
+<!-- catalog:begin -->
 - [Schölkopf 因果论文阅读站](https://sunfang3.github.io/schoelkopf-causality-notes/)
 - [Imai 教授近期论文精读](https://sunfang3.github.io/imai-manuscripts/)
 - [前沿论文阅读站](https://sunfang3.github.io/frontier-papers/)
+- [苏炜杰论文精读站](https://sunfang3.github.io/su-weijie-papers/)
+<!-- catalog:end -->
 {.cards}

@@ -1,0 +1,111 @@
+owner: sunfang3
+ignored:
+  - sunfang3.github.io
+topics:
+  notes: academic-notes
+  papers: academic-papers
+entries:
+  hong_econometrics:
+    category: notes
+    zh: Hong Econometrics 笔记
+    en: Hong Econometrics notes
+  hansen_econometric_vol_one:
+    category: notes
+    zh: Hansen《面向经济学家的概率论与统计学》伴读
+    en: Hansen, Probability and Statistics for Economists Companion
+  hong_probability:
+    category: notes
+    zh: Hong《面向经济学家的概率论与统计学》伴读
+    en: Hong, Probability and Statistics for Economists Companion
+  HDS:
+    category: notes
+    zh: HDS 伴读
+    en: HDS Companion
+  ANSES:
+    category: notes
+    zh: ANSES 伴读
+    en: ANSES Companion
+  EPME:
+    category: notes
+    zh: EPME 伴读
+    en: EPME Companion
+  GME:
+    category: notes
+    zh: 现代计量经济学伴读
+    en: A Guide to Modern Econometrics Companion
+  HDP:
+    category: notes
+    zh: HDP 伴读
+    en: HDP Companion
+  IMC100:
+    category: notes
+    zh: 国际数学竞赛伴读
+    en: International Mathematics Competition Companion
+  LinAlg:
+    category: notes
+    zh: 线性代数伴读
+    en: Linear Algebra Companion
+  mixtape-zh:
+    category: notes
+    zh: "《Causal Inference: The Remix》伴读"
+    en: "Causal Inference: The Remix Companion"
+  ml_for_ecnometrics:
+    category: notes
+    zh: 《Machine Learning for Econometrics》研读笔记
+    en: Machine Learning for Econometrics Notes
+  MSBI:
+    category: notes
+    zh: 数理统计伴读
+    en: Mathematical Statistics Companion
+  Qiu:
+    category: notes
+    zh: 因果推断实用计量方法伴读
+    en: Practical Econometric Methods for Causal Inference Companion
+  rosenbaum-companion:
+    category: notes
+    zh: Rosenbaum 伴读
+    en: Rosenbaum Companion
+  SI:
+    category: notes
+    zh: 统计推断伴读
+    en: Statistical Inference Companion
+  the-effect-zh:
+    category: notes
+    zh: 《The Effect》中文学习站
+    en: The Effect Chinese learning site
+  TSH:
+    category: notes
+    zh: Lehmann–Romano 伴读
+    en: Lehmann–Romano Companion
+  Train:
+    category: notes
+    zh: 离散选择模型伴读
+    en: Discrete Choice Methods with Simulation Companion
+  Xi:
+    category: notes
+    zh: “傻瓜”计量经济学与 Stata 应用伴读
+    en: Econometrics and Stata Applications Companion
+  dss-qss-companion:
+    category: notes
+    zh: DSS/QSS 伴读
+    en: DSS/QSS Companion
+  PM:
+    category: notes
+    zh: Protter–Morrey《实分析导论》伴读
+    en: Protter–Morrey, A First Course in Real Analysis Companion
+  schoelkopf-causality-notes:
+    category: papers
+    zh: Schölkopf 因果论文阅读站
+    en: Schölkopf causality paper notes
+  imai-manuscripts:
+    category: papers
+    zh: Imai 教授近期论文精读
+    en: Imai selected-manuscript notes
+  frontier-papers:
+    category: papers
+    zh: 前沿论文阅读站
+    en: Frontier-paper reading station
+  su-weijie-papers:
+    category: papers
+    zh: 苏炜杰论文精读站
+    en: Su Weijie paper reading station

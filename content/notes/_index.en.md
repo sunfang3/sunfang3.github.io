@@ -11,6 +11,7 @@ menus:
 
 An index of textbook companions. The writing stays on those sites.
 
+<!-- catalog:begin -->
 - [Hong Econometrics notes](https://sunfang3.github.io/hong_econometrics/)
 - [Hansen, Probability and Statistics for Economists Companion](https://sunfang3.github.io/hansen_econometric_vol_one/)
 - [Hong, Probability and Statistics for Economists Companion](https://sunfang3.github.io/hong_probability/)
@@ -32,4 +33,6 @@ An index of textbook companions. The writing stays on those sites.
 - [Discrete Choice Methods with Simulation Companion](https://sunfang3.github.io/Train/)
 - [Econometrics and Stata Applications Companion](https://sunfang3.github.io/Xi/)
 - [DSS/QSS Companion](https://sunfang3.github.io/dss-qss-companion/)
+- [Protter–Morrey, A First Course in Real Analysis Companion](https://sunfang3.github.io/PM/)
+<!-- catalog:end -->
 {.cards}

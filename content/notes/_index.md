@@ -11,6 +11,7 @@ menus:
 
 按教材组织的伴读索引，正文在各自站点。
 
+<!-- catalog:begin -->
 - [Hong Econometrics 笔记](https://sunfang3.github.io/hong_econometrics/)
 - [Hansen《面向经济学家的概率论与统计学》伴读](https://sunfang3.github.io/hansen_econometric_vol_one/)
 - [Hong《面向经济学家的概率论与统计学》伴读](https://sunfang3.github.io/hong_probability/)
@@ -32,4 +33,6 @@ menus:
 - [离散选择模型伴读](https://sunfang3.github.io/Train/)
 - [“傻瓜”计量经济学与 Stata 应用伴读](https://sunfang3.github.io/Xi/)
 - [DSS/QSS 伴读](https://sunfang3.github.io/dss-qss-companion/)
+- [Protter–Morrey《实分析导论》伴读](https://sunfang3.github.io/PM/)
+<!-- catalog:end -->
 {.cards}
