@@ -16,5 +16,6 @@ menus:
 - [Imai 教授近期论文精读](https://sunfang3.github.io/imai-manuscripts/)
 - [前沿论文阅读站](https://sunfang3.github.io/frontier-papers/)
 - [苏炜杰论文精读站](https://sunfang3.github.io/su-weijie-papers/)
+- [于晓华论文精读站](https://sunfang3.github.io/xiaohua-yu-reading-station/)
 {.cards}
 <!-- catalog:end -->
