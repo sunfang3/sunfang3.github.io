@@ -41,10 +41,12 @@ deploy them in one command, run this from a clean `main` branch:
 ruby scripts/sync_catalog.rb --publish
 ```
 
-For a future site, add the GitHub topic `academic-notes` or `academic-papers`.
-The next sync includes it automatically; it initially uses the repository name
-as its label. Add an entry to `data/catalog.yaml` when a polished bilingual
-label is needed.
+For a future site, the synchronizer first checks `data/catalog.yaml`, then the
+GitHub topics `academic-notes` and `academic-papers`, and finally high-confidence
+signals in the repository name, description, and README (for example, “伴读” /
+“textbook” versus “论文” / “paper” / “精读”). Ambiguous sites remain skipped rather
+than being misclassified. Add a topic for a deterministic category and an entry
+to `data/catalog.yaml` when a polished bilingual label is needed.
 
 Use `ruby scripts/sync_catalog.rb --check` in automation to fail when the
 committed catalogs are stale.

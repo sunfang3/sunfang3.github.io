@@ -2,6 +2,7 @@
 # frozen_string_literal: true
 
 require "json"
+require "base64"
 require "open3"
 require "thread"
 require "yaml"
@@ -10,6 +11,7 @@ ROOT = File.expand_path("..", __dir__)
 CATALOG = YAML.load_file(File.join(ROOT, "data/catalog.yaml"))
 CHECK_ONLY = ARGV.delete("--check")
 PUBLISH = ARGV.delete("--publish")
+README_CACHE = {}
 
 abort "usage: ruby scripts/sync_catalog.rb [--check | --publish]" unless ARGV.empty? && !(CHECK_ONLY && PUBLISH)
 
@@ -79,9 +81,43 @@ def category_for(repo, catalog)
   nil
 end
 
+def readme_metadata(owner, repo)
+  name = repo.fetch("name")
+  return README_CACHE[name] if README_CACHE.key?(name)
+
+  output, error, status = Open3.capture3("gh", "api", "repos/#{owner}/#{name}/readme")
+  unless status.success?
+    warn "Could not read README for #{name}: #{error.strip}" unless error.include?("HTTP 404")
+    return README_CACHE[name] = { "text" => "", "title" => nil }
+  end
+
+  text = Base64.decode64(JSON.parse(output).fetch("content"))
+  title = text[/^\s*#\s+(.+?)\s*$/m, 1]&.gsub(/\s+/, " ")
+  README_CACHE[name] = { "text" => text, "title" => title }
+rescue JSON::ParserError, ArgumentError => error
+  warn "Could not parse README for #{name}: #{error.message}"
+  README_CACHE[name] = { "text" => "", "title" => nil }
+end
+
+def score(text, signals)
+  signals.sum { |pattern, weight| text.scan(pattern).length * weight }
+end
+
+def inferred_category_for(repo, owner)
+  metadata = readme_metadata(owner, repo)
+  text = [repo.fetch("name").tr("-_", " "), repo["description"], metadata.fetch("text")].compact.join(" ").downcase
+  papers = score(text, [[/论文/, 2], [/\bpapers?\b/, 1], [/manuscripts?/, 2], [/精读/, 2], [/文献/, 1], [/literature/, 1]])
+  notes = score(text, [[/教材/, 2], [/伴读/, 2], [/companions?/, 2], [/textbooks?/, 2], [/习题/, 1], [/solutions?/, 1], [/学习笔记/, 2], [/study notes/, 2]])
+
+  return nil if [papers, notes].max < 2 || papers == notes
+
+  category = papers > notes ? "papers" : "notes"
+  { "category" => category, "inferred_title" => metadata.fetch("title"), "confidence" => [papers, notes].max }
+end
+
 def label_for(repo, catalog, locale)
   entry = catalog.fetch("entries").fetch(repo.fetch("name"), {})
-  entry.fetch(locale, repo.fetch("name"))
+  entry[locale] || repo["inferred_title"] || repo.fetch("name")
 end
 
 def marker_block(items, catalog, locale)
@@ -104,15 +140,23 @@ entries = CATALOG.fetch("entries")
 priority = entries.keys.each_with_index.to_h
 selected = sites.filter_map do |repo|
   category = category_for(repo, CATALOG)
-  next unless category
-
-  repo.merge("category" => category)
+  if category
+    repo.merge("category" => category)
+  elsif CATALOG.fetch("ignored", []).include?(repo.fetch("name"))
+    nil
+  else
+    inferred = inferred_category_for(repo, CATALOG.fetch("owner"))
+    if inferred
+      warn "Auto-classified #{repo.fetch('name')} as #{inferred.fetch('category')} (confidence #{inferred.fetch('confidence')})"
+      repo.merge(inferred)
+    end
+  end
 end
+
 selected.sort_by! { |repo| [repo.fetch("category"), priority.fetch(repo.fetch("name"), Float::INFINITY), repo.fetch("name").downcase] }
 
-unknown = sites.reject do |repo|
-  category_for(repo, CATALOG) || CATALOG.fetch("ignored", []).include?(repo.fetch("name"))
-end
+known = selected.map { |repo| repo.fetch("name") }
+unknown = sites.reject { |repo| known.include?(repo.fetch("name")) || CATALOG.fetch("ignored", []).include?(repo.fetch("name")) }
 warn "Skipping unclassified Pages: #{unknown.map { |repo| repo.fetch('name') }.join(', ')}" unless unknown.empty?
 
 targets = {
