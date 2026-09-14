@@ -17,5 +17,6 @@ An index of paper notes. The writing stays on those sites.
 - [Frontier-paper reading station](https://sunfang3.github.io/frontier-papers/)
 - [Su Weijie paper reading station](https://sunfang3.github.io/su-weijie-papers/)
 - [Xiaohua Yu paper reading station](https://sunfang3.github.io/xiaohua-yu-reading-station/)
+- [Stefan Wager paper reading station](https://sunfang3.github.io/stefan-wager-papers/)
 {.cards}
 <!-- catalog:end -->

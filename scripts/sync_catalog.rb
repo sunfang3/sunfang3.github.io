@@ -81,22 +81,33 @@ def category_for(repo, catalog)
   nil
 end
 
+def repository_text(owner, name, path)
+  endpoint = path == "README" ? "repos/#{owner}/#{name}/readme" : "repos/#{owner}/#{name}/contents/#{path}"
+  output, error, status = Open3.capture3("gh", "api", endpoint)
+  return nil if !status.success? && error.include?("HTTP 404")
+  unless status.success?
+    warn "Could not read #{path} for #{name}: #{error.strip}"
+    return nil
+  end
+
+  Base64.decode64(JSON.parse(output).fetch("content")).force_encoding(Encoding::UTF_8)
+rescue JSON::ParserError, ArgumentError => error
+  warn "Could not parse #{path} for #{name}: #{error.message}"
+  nil
+end
+
 def readme_metadata(owner, repo)
   name = repo.fetch("name")
   return README_CACHE[name] if README_CACHE.key?(name)
 
-  output, error, status = Open3.capture3("gh", "api", "repos/#{owner}/#{name}/readme")
-  unless status.success?
-    warn "Could not read README for #{name}: #{error.strip}" unless error.include?("HTTP 404")
-    return README_CACHE[name] = { "text" => "", "title" => nil }
-  end
-
-  text = Base64.decode64(JSON.parse(output).fetch("content"))
-  title = text[/^\s*#\s+(.+?)\s*$/m, 1]&.gsub(/\s+/, " ")
+  text = repository_text(owner, name, "README") ||
+    repository_text(owner, name, "index.qmd") ||
+    repository_text(owner, name, "index.md") ||
+    repository_text(owner, name, "content/_index.md") || ""
+  front_matter_title = text[/^title:\s*(.+?)\s*$/i, 1]
+  title = front_matter_title || text[/^\s*#\s+(.+?)\s*$/m, 1]
+  title = title&.strip&.delete_prefix('"')&.delete_suffix('"')&.delete_prefix("'")&.delete_suffix("'")&.gsub(/\s+/, " ")
   README_CACHE[name] = { "text" => text, "title" => title }
-rescue JSON::ParserError, ArgumentError => error
-  warn "Could not parse README for #{name}: #{error.message}"
-  README_CACHE[name] = { "text" => "", "title" => nil }
 end
 
 def score(text, signals)

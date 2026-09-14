@@ -17,5 +17,6 @@ menus:
 - [前沿论文阅读站](https://sunfang3.github.io/frontier-papers/)
 - [苏炜杰论文精读站](https://sunfang3.github.io/su-weijie-papers/)
 - [于晓华论文精读站](https://sunfang3.github.io/xiaohua-yu-reading-station/)
+- [Stefan Wager 论文精读站](https://sunfang3.github.io/stefan-wager-papers/)
 {.cards}
 <!-- catalog:end -->

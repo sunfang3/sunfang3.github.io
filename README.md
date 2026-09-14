@@ -43,8 +43,9 @@ ruby scripts/sync_catalog.rb --publish
 
 For a future site, the synchronizer first checks `data/catalog.yaml`, then the
 GitHub topics `academic-notes` and `academic-papers`, and finally high-confidence
-signals in the repository name, description, and README (for example, “伴读” /
-“textbook” versus “论文” / “paper” / “精读”). Ambiguous sites remain skipped rather
+signals in the repository name, description, README, and common Quarto entry
+files such as `index.qmd` (for example, “伴读” / “textbook” versus “论文” /
+“paper” / “精读”). Ambiguous sites remain skipped rather
 than being misclassified. Add a topic for a deterministic category and an entry
 to `data/catalog.yaml` when a polished bilingual label is needed.
 
