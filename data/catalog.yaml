@@ -116,3 +116,11 @@ entries:
   stefan-wager-papers:
     zh: Stefan Wager 论文精读站
     en: Stefan Wager paper reading station
+  tomaso-aste-papers:
+    category: papers
+    zh: Tomaso Aste 论文精读站
+    en: Tomaso Aste paper reading station
+  hansen-reading-station:
+    category: papers
+    zh: Bruce E. Hansen 论文精读站
+    en: Bruce E. Hansen paper reading station
